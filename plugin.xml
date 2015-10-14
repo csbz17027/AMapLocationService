@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<plugin xmlns="http://www.phonegap.com/ns/plugins/1.0"
+        id="lance.cordova.plugins.AMapLocationService" version="0.0.1">
+    <name>AMapLocationService</name>
+    <description>AMap Location android Plugin for Cordova</description>
+    <license>MIT</license>
+    <keywords>AMap, location, cordova , android</keywords>
+    <js-module src="www/AMapLocationService.js" name="AMapLocationService">
+        <clobbers target="window.plugins.AMapLocationService" />
+    </js-module>
+    <!-- android -->
+    <platform name="android">
+
+        <config-file target="res/xml/config.xml" parent="/*">
+            <feature name="AMapLocationService">
+                <param name="android-package" value="lance.cordova.plugins.AMapLocationService"/>
+            </feature>
+        </config-file>
+
+        <config-file target="AndroidManifest.xml" parent="/manifest/application">
+            <meta-data
+                    android:name="com.amap.api.v2.apikey"
+                    android:value="4e3ebba8a27db2f552d78059e9d93799" />
+
+        </config-file>
+
+        <config-file target="AndroidManifest.xml" parent="/manifest">
+            <uses-permission android:name="android.permission.INTERNET" />
+            <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+            <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+            <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+            <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+            <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+            <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+            <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+            <uses-permission android:name="android.permission.CHANGE_CONFIGURATION" />
+        </config-file>
+
+        <source-file src="src/android/AMapLocationService.java" target-dir="src/lance/cordova/plugins"/>
+        <source-file src="src/android/AMap_Location_v1.4.1_20150917.jar" target-dir="libs" framework="true"/>
+    </platform>
+</plugin>
