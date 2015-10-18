@@ -21,7 +21,7 @@
         <config-file target="AndroidManifest.xml" parent="/manifest/application">
             <meta-data
                     android:name="com.amap.api.v2.apikey"
-                    android:value="4e3ebba8a27db2f552d78059e9d93799" />
+                    android:value="输入你申请的key" />
 
         </config-file>
 

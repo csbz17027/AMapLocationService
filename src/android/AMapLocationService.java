@@ -20,8 +20,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.lang.Exception;
-
 public class AMapLocationService extends CordovaPlugin implements AMapLocationListener {
 
     private static final String STOP_ACTION = "stop";
