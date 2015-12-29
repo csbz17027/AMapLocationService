@@ -12,7 +12,6 @@ import com.amap.api.location.AMapLocation;
 import com.amap.api.location.AMapLocationListener;
 import com.amap.api.location.LocationManagerProxy;
 import com.amap.api.location.LocationProviderProxy;
-
 import org.apache.cordova.CallbackContext;
 import org.apache.cordova.CordovaPlugin;
 import org.apache.cordova.PluginResult;
@@ -33,6 +32,9 @@ public class AMapLocationService extends CordovaPlugin implements AMapLocationLi
                            final CallbackContext callbackContext) {
         setCallbackContext(callbackContext);
         if (GET_ACTION.equals(action)) {
+            PluginResult pluginResult = new PluginResult(PluginResult.Status.NO_RESULT);
+            pluginResult.setKeepCallback(true);
+            this.callbackContext.sendPluginResult(pluginResult);
             if (mLocationManagerProxy == null) {
                 cordova.getThreadPool().execute(new Runnable() {
                     public void run() {
@@ -40,26 +42,32 @@ public class AMapLocationService extends CordovaPlugin implements AMapLocationLi
                         mLocationManagerProxy.requestLocationData(LocationProviderProxy.AMapNetwork, 10 * 1000, 10, AMapLocationService.this);
                     }
                 });
-            } else {
-                try {
-                    if (jsonObj.getInt("errCode") == 0) {
-                        callbackContext.success(jsonObj);
-                    } else {
-                        callbackContext.error(jsonObj);
-                    }
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-
             }
+//            else {
+//                try {
+//                    if (jsonObj.getInt("errCode") == 0) {
+//                        callbackContext.success(jsonObj);
+//                    } else {
+//                        callbackContext.error(jsonObj);
+//                    }
+//                } catch (JSONException e) {
+//                    e.printStackTrace();
+//                }
+//
+//            }
             return true;
         }
         if (STOP_ACTION.equals(action)) {
             stopLocation();
             callbackContext.success(200);
+            PluginResult pluginResult = new PluginResult(PluginResult.Status.OK, 200);
+            callbackContext.sendPluginResult(pluginResult);
+            pluginResult.setKeepCallback(false);
             return true;
         }
-        callbackContext.error(PluginResult.Status.INVALID_ACTION.toString());
+        PluginResult pluginResult = new PluginResult(PluginResult.Status.ERROR,PluginResult.Status.INVALID_ACTION.toString());
+        callbackContext.sendPluginResult(pluginResult);
+        pluginResult.setKeepCallback(false);
         return false;
     }
 
@@ -103,14 +111,23 @@ public class AMapLocationService extends CordovaPlugin implements AMapLocationLi
                 jsonObj.put("address", aMapLocation.getAddress());
                 jsonObj.put("time", aMapLocation.getTime());
                 Log.d("lanceLocation", jsonObj.toString());
-                callbackContext.success(jsonObj);
+                PluginResult pluginResult = new PluginResult(PluginResult.Status.OK, jsonObj);
+                pluginResult.setKeepCallback(true);
+                callbackContext.sendPluginResult(pluginResult);
             } else {
                 jsonObj.put("errCode", aMapLocation.getAMapException().getErrorCode());
                 jsonObj.put("errMsg", aMapLocation.getAMapException().getMessage());
-                callbackContext.error(jsonObj);
+                PluginResult pluginResult = new PluginResult(PluginResult.Status.ERROR,jsonObj);
+                pluginResult.setKeepCallback(true);
+                callbackContext.sendPluginResult(pluginResult);
             }
         } catch (JSONException e) {
             callbackContext.error(e.getMessage());
+            String errMsg = e.getMessage();
+            PluginResult pluginResult = new PluginResult(PluginResult.Status.ERROR, errMsg);
+            callbackContext.sendPluginResult(pluginResult);
+            pluginResult.setKeepCallback(false);
+            stopLocation();
         }
     }
 
