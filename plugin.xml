@@ -19,10 +19,10 @@
         </config-file>
 
         <config-file target="AndroidManifest.xml" parent="/manifest/application">
+            <service android:name="com.amap.api.location.APSService"></service>
             <meta-data
                     android:name="com.amap.api.v2.apikey"
                     android:value="输入你申请的key" />
-
         </config-file>
 
         <config-file target="AndroidManifest.xml" parent="/manifest">
@@ -31,13 +31,12 @@
             <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
             <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
             <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-            <uses-permission android:name="android.permission.READ_PHONE_STATE" />
             <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
             <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
             <uses-permission android:name="android.permission.CHANGE_CONFIGURATION" />
         </config-file>
 
         <source-file src="src/android/AMapLocationService.java" target-dir="src/lance/cordova/plugins"/>
-        <source-file src="src/android/AMap_Location_v1.4.1_20150917.jar" target-dir="libs" framework="true"/>
+        <source-file src="src/android/AMap_Location_V2.2.0_20151222.jar" target-dir="libs" framework="true"/>
     </platform>
 </plugin>
