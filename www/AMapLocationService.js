@@ -16,7 +16,7 @@ AMapLocationService.prototype.execute = function(action,successCallback,errorCal
 	*启动定位服务并获取当前定位信息
 	*/
 AMapLocationService.prototype.getCurrentPosition = function(successCallback, errorCallback){
-	this.execute("getCurrentPosition",successCallback,errorCallback);
+	this.execute("getCurrentPosition",successCallback,errorCallback,[]);
 	};
 
 AMapLocationService.prototype.locationWatch = function(successCallback,errorCallback,option){
@@ -51,7 +51,7 @@ AMapLocationService.prototype.changeOption = function(successCallback,errorCallb
 	*关闭定位服务
 	*/
 AMapLocationService.prototype.stop = function(successCallback, errorCallback){
-	this.execute("stop",successCallback,errorCallback);
+	this.execute("stop",successCallback,errorCallback,[]);
 	};
 
 if(!window.plugins){
